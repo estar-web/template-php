@@ -38,3 +38,8 @@
     }
   }
 }
+
+// font-sizeをclamp関数で出力
+@mixin fz_clamp($minFontSize, $maxFontSize, $minWidth: 375, $maxWidth: var.$xl-inner) {
+  font-size: fn.calc_clamp($minFontSize, $maxFontSize, $minWidth, $maxWidth);
+}

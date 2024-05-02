@@ -1,60 +1,57 @@
-const gulp = require('gulp');
-const del = require('del');
+const gulp = require("gulp");
+const del = require("del");
 
 //scss
-const sass = require('gulp-dart-sass'); //DartSassを使用
+const sass = require("gulp-dart-sass"); //DartSassを使用
 const plumber = require("gulp-plumber"); // エラーが発生しても強制終了させない
 const notify = require("gulp-notify"); // エラー発生時のアラート出力
 const browserSync = require("browser-sync"); //ブラウザリロード
-const autoprefixer = require('gulp-autoprefixer'); //ベンダープレフィックス自動付与
+const autoprefixer = require("gulp-autoprefixer"); //ベンダープレフィックス自動付与
 const postcss = require("gulp-postcss"); //css-mqpackerを使用
-const mqpacker = require('css-mqpacker'); //メディアクエリをまとめる
+const mqpacker = require("css-mqpacker"); //メディアクエリをまとめる
+const bulkSass = require("gulp-sass-glob-use-forward");
 
 // 画像圧縮
-const change = require('gulp-changed');
+const change = require("gulp-changed");
 const imageMin = require("gulp-imagemin");
 const mozJpeg = require("imagemin-mozjpeg");
 const pngQuant = require("imagemin-pngquant");
 
 // webp変換
-const webp = require('gulp-webp'); //gulp-webpでwebp変換
-
+const webp = require("gulp-webp"); //gulp-webpでwebp変換
 
 // 入出力するフォルダを指定
-const srcBase = './_src';
-const distBase = './dist';
-
+const srcBase = "./_src";
+const distBase = "./dist";
 
 const srcPath = {
-  'scss': srcBase + '/scss/**/*.scss',
-  'img': srcBase + '/images/**/*.{png,jpg,jpeg,svg,gif,ico,mp4}',
-  'js': srcBase + '/js/*.js',
-  'php': srcBase + '/**/*.php',
+  scss: srcBase + "/scss/**/*.scss",
+  img: srcBase + "/images/**/*.{png,jpg,jpeg,svg,gif,ico,mp4,webp}",
+  js: srcBase + "/js/*.js",
+  php: srcBase + "/**/*.php",
 };
 
 const distPath = {
-  'css': distBase + '/assets/css/',
-  'img': distBase + '/assets/images/',
-  'js': distBase + '/assets/js/',
-  'php': distBase + '/',
+  css: distBase + "/assets/css/",
+  img: distBase + "/assets/images/",
+  js: distBase + "/assets/js/",
+  php: distBase + "/",
 };
-
 
 /**
  * clean
  */
 const clean = () => {
-  return del([distBase + '/**', '!./dist/style.css'], {
-    force: true
+  return del([distBase + "/**", "!./dist/style.css"], {
+    force: true,
   });
-}
+};
 
 //ベンダープレフィックスを付与する条件
 const TARGET_BROWSERS = [
-  'last 2 versions', //各ブラウザの2世代前までのバージョンを担保
-  'ie >= 11' //IE11を担保
+  "last 2 versions", //各ブラウザの2世代前までのバージョンを担保
+  "ie >= 11", //IE11を担保
 ];
-
 
 /**
  * sass
@@ -71,6 +68,7 @@ const cssSass = (done) => {
         errorHandler: notify.onError("Error:<%= error.message %>"),
       })
     )
+    .pipe(bulkSass())
     .pipe(
       sass({
         outputStyle: "expanded",
@@ -93,7 +91,6 @@ const cssSass = (done) => {
   done();
 };
 
-
 /**
  * js
  */
@@ -102,12 +99,12 @@ const js = (done) => {
   done();
 };
 
-
 /**
  * image
  */
 const image = (done) => {
-  gulp.src(srcPath.img)
+  gulp
+    .src(srcPath.img)
     .pipe(change(distPath.img))
     .pipe(
       imageMin([
@@ -120,24 +117,21 @@ const image = (done) => {
         }),
         imageMin.svgo(),
         imageMin.optipng(),
-        imageMin.gifsicle({ optimizationLevel: 3 })
+        imageMin.gifsicle({ optimizationLevel: 3 }),
       ])
     )
     .pipe(webp())
     .pipe(gulp.dest(distPath.img));
   done();
-}
-
+};
 
 /**
  * php
  */
 const php = (done) => {
-  gulp.src(srcPath.php)
-    .pipe(gulp.dest(distPath.php));
+  gulp.src(srcPath.php).pipe(gulp.dest(distPath.php));
   done();
-}
-
+};
 
 /**
  * リロード
@@ -145,8 +139,7 @@ const php = (done) => {
 const browserSyncReload = (done) => {
   browserSync.reload();
   done();
-}
-
+};
 
 /**
  *
@@ -155,11 +148,11 @@ const browserSyncReload = (done) => {
  * watch('監視するファイル',処理)
  */
 const watchFiles = () => {
-  gulp.watch(srcPath.php, gulp.series(php, browserSyncReload))
+  gulp.watch(srcPath.php, gulp.series(php, browserSyncReload));
   gulp.watch(srcPath.scss, gulp.series(cssSass, browserSyncReload));
-  gulp.watch(srcPath.js, gulp.series(js, browserSyncReload))
-  gulp.watch(srcPath.img, gulp.series(image, browserSyncReload))
-}
+  gulp.watch(srcPath.js, gulp.series(js, browserSyncReload));
+  gulp.watch(srcPath.img, gulp.series(image, browserSyncReload));
+};
 
 /**
  * seriesは「順番」に実行

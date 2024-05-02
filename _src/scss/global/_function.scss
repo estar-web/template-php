@@ -20,3 +20,14 @@
   $rate: math.div(100, $vp);
   @return $rate * $size * 1vw;
 }
+
+//clamp関数の作成
+@function calc_clamp($minFontSize, $maxFontSize, $minWidth, $maxWidth) {
+  $maxPxSize: $maxFontSize * 16;
+  $minPxSize: $minFontSize * 16;
+  $slope: math.div(($maxPxSize - $minPxSize) * 1px, ($maxWidth - $minWidth));
+  $yAxisIntersection: rem((-1 * $minWidth * $slope + $minPxSize));
+  $slope_vw: $slope * 100 * 1vw;
+  @return clamp(($minFontSize * 1rem), ($yAxisIntersection) unquote("+") ($slope_vw), ($maxFontSize * 1rem));
+  // @return clamp(rem($minFontSize), ($yAxisIntersection) unquote("+") ($slope_vw), rem($maxFontSize));
+}
