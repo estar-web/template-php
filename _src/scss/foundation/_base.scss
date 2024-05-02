@@ -5,8 +5,8 @@ html{
 }
 
 body{
-  font-family: global.$mainFont;
-  color: map-get(global.$color, black);
+  font-family: $mainFont;
+  color: map-get($color, black);
 }
 
 summary {

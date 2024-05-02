@@ -2,28 +2,28 @@
 
 .u-hide{
   display: block;
-  @include global.mq(){
+  @include mq(){
     display: none;
   }
 }
 
 .u-show{
   display: none;
-  @include global.mq(){
+  @include mq(){
     display: block;
   }
 }
 
 .u-hide--inline{
   display: inline-block;
-  @include global.mq(){
+  @include mq(){
     display: none;
   }
 }
 
 .u-show--inline{
   display: none;
-  @include global.mq(){
+  @include mq(){
     display: inline-block;
   }
 }
