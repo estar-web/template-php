@@ -2,7 +2,7 @@ module.exports = {
   // 開発モードはdevelopment
   // 本番モードはproduction
   mode: "production",
-  entry: "./src/js/app.js",
+  entry: "./_src/js/app.js",
   output: {
     filename: "bundle.js",
     path: `${__dirname}/assets/js/`,
