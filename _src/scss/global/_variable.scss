@@ -1,22 +1,41 @@
-// color
-$color: (
-);
+@use "./function" as fn;
 
-// font-family
-$mainFont: 'Noto Sans JP', "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-$englishFont: 'Montserrat', sans-serif;
-$mixedFont: 'Montserrat', 'Noto Sans JP', "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+// css変数
+:root {
+  // color
+  --color-primary: #fff;
+  --color-secondary: #eee;
+  --color-text: #333;
 
-// inner
-$xl-inner: 900px;
-$l-inner: 800px;
-$m-inner: 780px;
-$s-inner: 550px;
-$inner-sp: 750px;
+  // font-family
+  --ff-main: "Zen Maru Gothic", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  --ff-eg: "Montserrat", sans-serif;
 
-// padding
-$padding: 20px;
-$padding-sp: 16px;
+  // layout
+  --inner-s: 34.375rem;   //550px
+  --inner-l: 50rem;       //800px
+  --inner-xl: 67.5rem;    //1080px
+
+  // padding
+  --padding-s: 1.25rem;
+  --padding: 1.25rem;
+
+  // header height
+  --header-pc: 6.625rem;
+  --header-sp: 6rem;
+
+  // ease-time
+  --ease-time: 0.3s;
+  // ease-type
+  --ease-type: ease;
+
+  // breakpoint
+  --break-xxl: 1399.98px;   //1399.98px
+  --break-xl: 1079.98px;    //1079.98px
+  --break-l: 991.98px;     //991.98px
+  --break-m: 767.98px;     //767.98px
+  --break-s: 575.98px;     //575.98px
+}
 
 // breakpoint
 $breakpoints : (
