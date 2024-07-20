@@ -61,7 +61,6 @@ const TARGET_BROWSERS = [
 
 /**
  * sass
- *
  */
 const cssSass = (done) => {
   gulp
@@ -71,6 +70,7 @@ const cssSass = (done) => {
     .pipe(
       //エラーが出ても処理を止めない
       plumber({
+        includePaths: [srcPath.scss],
         errorHandler: notify.onError("Error:<%= error.message %>"),
       }),
     )
