@@ -12,7 +12,11 @@
 
 ## サイトマップ
 ```
-
+top(front-page.php)
+├── お問い合わせ(page-contact.php)
+├── サンクスページ(page-thanks.php)
+├── プライバシポリシー(page-privacy-policy.php)
+└── 404(404.php)
 ```
 
 ## ディレクトリ構成
